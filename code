@@ -1,0 +1,53 @@
+import math
+import time
+print("1-saisir vitesse xyz")
+print("2-saisir vitesse angle")
+choix = int(input("choix:"))
+print("")
+if choix == 1:
+    vxdeb = float(input("vitesse x(m.s):"))
+    vydeb = float(input("vitesse y(m.s):"))
+    vzdeb = float(input("vitesse z(m.s):"))
+    ydeb = float(input("hauteur y(m):"))
+elif choix == 2:
+    vit = float(input("vitesse (m.s):"))
+    anglexy = float(input("angle xy (0-180):"))
+    anglexz = float(input("angle xz (0-360):"))
+    ydeb = float(input("hauteur y(m):"))
+    vxde = vit * math.cos(float(anglexy/57.2957))
+    vydeb = vit * math.sin(float(anglexy/57.2957))
+    vzdeb = vxde * math.sin(float(anglexz/57.2957))
+    vxdeb = vxde * math.cos(float(anglexz/57.2957))
+else:
+    print("erreur de choix")
+print("")
+pres = 1
+t = 0.001
+while pres > 0.0000001:
+    y = -1/2*9.81*t**2 + vydeb*t + ydeb
+    if y > 0:
+      t = t + pres
+    else:
+      t = t - pres
+      pres = pres / 2
+print("")
+print("vitesse de départ:",round(math.sqrt(vxdeb**2+vydeb**2+vzdeb**2),2),"m.s")
+print("vitesse horizontale:",round(math.sqrt(vxdeb**2+vzdeb**2),2),"m.s")
+print("")
+print("temps au sommet:",round(vydeb/9.81,2),"s")
+print("hauteur la plus haute:",round(-1/2*9.81*(vydeb/9.81)**2 + (vydeb**2)/9.81 + ydeb,2),"m")
+print("")
+print("l'objet touche le sol au temps:", round(t,3),"s")
+print("vitesse à l'impact (y):",-(round(-9.81*t+vydeb,2)),"m.s")
+print("vitesse à l'impact:",round(math.sqrt((-(round(-9.81*t+vydeb,2)))**2+vxdeb**2+vzdeb**2),2),"m.s")
+print("")
+x = vxdeb*t 
+z = vzdeb*t
+print("x:",round(x,2),"m  z:",round(z,2),"m")
+print("distance au sol:",(round(math.sqrt(x**2+z**2),2)),"m")
+print("")
+#for i in range((round(t))*1000):
+#  y = -1/2*9.81*(i/1000)**2 + vydeb*(i/1000) + ydeb
+#    print(y,i/1000)
+  
+ 
